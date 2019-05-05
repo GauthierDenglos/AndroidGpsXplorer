@@ -13,13 +13,24 @@
         android:layout_marginTop="10dp"
         android:textSize="20sp"
         android:text="Welcome to the GpsXplorer app ! Press start to launch the record : "/>
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:text="Hello World!"
-        android:id="@+id/id_textview" />
+        android:text="Longitude = "
+        android:id="@+id/textview_long" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Latitude = "
+        android:textSize="20sp"
+        android:id="@+id/textview_lat" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Altitude = "
+        android:textSize="20sp"
+        android:id="@+id/textview_alt" />
 
     <Chronometer
         android:layout_width="wrap_content"
@@ -33,19 +44,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Start !"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:id="@+id/createGpx"/>
-
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Stop !"
         android:id="@+id/launchActivity"/>
-
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Reset all !"
+        android:text="Reset Chronometer !"
         android:id="@+id/resetAll"/>
+    <!--<Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pause Chronometer !"
+        android:id="@+id/pauseChrono"/>-->
 
 </LinearLayout>
