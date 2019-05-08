@@ -7,37 +7,65 @@
     android:orientation="vertical"
     tools:context=".statActivity">
 
-
-    <LinearLayout
+    <com.javahelps.trailxplorer.CustomView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="300dp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="Graph of your speed  during the time "
+        android:layout_marginBottom="50dp"
+        android:layout_marginLeft="40dp"
+        android:textColor="@android:color/black"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Average speed = "/>
+            android:text="Average speed = "
+            android:textSize="18dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="100dp"
+            android:textColor="@android:color/black"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Total distance = "/>
+            android:text="Total distance = "
+            android:textSize="18dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="100dp"
+            android:textColor="@android:color/black"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Time taken = "/>
+            android:text="Time taken = "
+            android:textSize="18dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="100dp"
+            android:textColor="@android:color/black"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Minimum altitude = "/>
+            android:text="Minimum altitude = "
+            android:textSize="18dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="100dp"
+            android:textColor="@android:color/black"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Maximum altitude = "/>
+            android:text="Maximum altitude = "
+            android:textSize="18dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="100dp"
+            android:textColor="@android:color/black"/>
 
-    </LinearLayout>
+
 
 </LinearLayout>

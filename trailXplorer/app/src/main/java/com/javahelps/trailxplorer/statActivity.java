@@ -19,5 +19,7 @@ public class statActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Stat Activity");
+
+        CustomView customView = new CustomView(this);
     }
 }
