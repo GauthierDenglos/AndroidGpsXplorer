@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             textview_long.setText("Longitude = " + String.valueOf(longitude));
             textview_alt.setText("Altitude = " + String.valueOf(altitude));
             Toast.makeText(MainActivity.this, "location check", Toast.LENGTH_SHORT).show();
-            MainActivity.this.handler.postDelayed(MainActivity.this.runLocation, 10000);
+            MainActivity.this.handler.postDelayed(MainActivity.this.runLocation, 5000);
         }
     };
 
