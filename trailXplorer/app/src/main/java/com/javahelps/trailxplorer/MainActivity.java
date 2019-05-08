@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     //variable used in the second activity
     private static double maxAtlitude;
-    private static double minAtlitude;
+    private static double minAtlitude = 10000;
 
     private File path= Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
     private File GPXFile;
