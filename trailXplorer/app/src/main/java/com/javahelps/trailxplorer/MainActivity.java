@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v4.app.ActivityCompat;
@@ -19,12 +20,22 @@ import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.Externalizable;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity implements LocationListener {
 
     //Stopwatch variable. Allows to create and increment the timer
     private static Chronometer chronometer;
     private long pauseOffset = 0;
-    private boolean running;
+    private boolean running ;
+    private boolean isstart = false;
 
     //Location: Altitude, longitude and Latitude
     private TextView textview_lat;
@@ -41,6 +52,14 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private static double maxAtlitude;
     private static double minAtlitude;
 
+    private File path= Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+    private File GPXFile;
+    private Date date;
+    private DateFormat format = new SimpleDateFormat("yyyy,MM.dd HH:mm:ss");
+    private PrintWriter writer;
+    int MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE = 1;
+    int MY_PERMISSIONS_READ_EXTERNAL_STORAGE = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,10 +74,19 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         Button startBtn = (Button) findViewById(R.id.createGpx);
         Button resetBtn = (Button) findViewById(R.id.resetAll);
 
+        ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE);
+        ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                MY_PERMISSIONS_READ_EXTERNAL_STORAGE);
         stopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, statActivity.class));
+                isstart = false;
+                writer.println("       </trkseg>" );
+                writer.println("   </trk>");
+                writer.print("</gpx>");
+                writer.close();
             }
         });
 
@@ -66,6 +94,30 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             @Override
             public void onClick(View v) {
                 startChronometer(v);
+                isstart =true;
+                date = new Date();
+                GPXFile = new File(path + "/GPStracks/", format.format(date) + ".gpx");
+                try {
+                    if (GPXFile.getParentFile().exists() || GPXFile.getParentFile().mkdirs()) {
+                        GPXFile.createNewFile();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    writer = new PrintWriter(GPXFile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+                writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>");
+                writer.println("<gpx xmlns:android=\"http://schemas.android.com/apk/res/android\"" );
+                writer.println("    xmlns:app=\"http://schemas.android.com/apk/res-auto\"");
+                writer.println("    xmlns:tools=\"http://schemas.android.com/tools\">");
+                writer.println("   <trk>");
+                writer.println("       <trkseg>");
             }
         });
 
@@ -109,11 +161,17 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     public Runnable runLocation = new Runnable(){
         @Override
         public void run() {
-            textview_lat.setText("Latitude = " + String.valueOf(latitude));
-            textview_long.setText("Longitude = " + String.valueOf(longitude));
-            textview_alt.setText("Altitude = " + String.valueOf(altitude));
-            Toast.makeText(MainActivity.this, "location check", Toast.LENGTH_SHORT).show();
-            MainActivity.this.handler.postDelayed(MainActivity.this.runLocation, 5000);
+
+                textview_lat.setText("Latitude = " + String.valueOf(latitude));
+                textview_long.setText("Longitude = " + String.valueOf(longitude));
+                textview_alt.setText("Altitude = " + String.valueOf(altitude));
+                //Toast.makeText(MainActivity.this, "location check", Toast.LENGTH_SHORT).show();
+                MainActivity.this.handler.postDelayed(MainActivity.this.runLocation, 5000);
+            if (isstart){
+                writer.println("          <trkpt lat= " + location.getLatitude() +" lon=" + location.getLongitude() + ">");
+                writer.println("               <ele>" + location.getAltitude() + "</ele>");
+                writer.println("           </trkpt>");
+            }
         }
     };
 
