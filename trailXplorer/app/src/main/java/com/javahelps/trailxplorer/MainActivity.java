@@ -22,7 +22,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity implements LocationListener {
 
     //Stopwatch variable. Allows to create and increment the timer
-    private Chronometer chronometer;
+    private static Chronometer chronometer;
     private long pauseOffset = 0;
     private boolean running;
 
@@ -35,7 +35,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private Location location;
     private double latitude;
     private double longitude;
-    private double altitude;
+    private static double altitude;
+
+    //variable used in the second activity
+    private static double maxAtlitude;
+    private static double minAtlitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +54,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         Button stopBtn = (Button) findViewById(R.id.launchActivity);
         Button startBtn = (Button) findViewById(R.id.createGpx);
         Button resetBtn = (Button) findViewById(R.id.resetAll);
-        //Button pauseBtn = (Button) findViewById(R.id.pauseChrono);
 
         stopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,13 +75,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 resetChronometer(v);
             }
         });
-
-        /*pauseBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pauseChronometer(v);
-            }
-        });*/
 
         textview_lat = (TextView) findViewById(R.id.textview_lat);
         textview_long = (TextView) findViewById(R.id.textview_long);
@@ -152,17 +148,24 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     }
 
-    /*public void pauseChronometer (View v){
-        if(running){
-            chronometer.stop();
-            pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
-            running = false;
-        }
-
-    }*/
-
     public void resetChronometer (View v){
         chronometer.setBase(SystemClock.elapsedRealtime());
         pauseOffset = 0;
+    }
+
+    public static double getMaxAtlitude(){
+        if (maxAtlitude < altitude)
+            maxAtlitude = altitude;
+        return maxAtlitude;
+    }
+
+    public static double getMinAtlitude(){
+        if (altitude < minAtlitude)
+            minAtlitude = altitude;
+        return minAtlitude;
+    }
+
+    public static Chronometer getTimer(){
+        return chronometer;
     }
 }
