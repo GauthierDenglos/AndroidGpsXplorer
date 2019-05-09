@@ -41,11 +41,14 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private TextView textview_lat;
     private TextView textview_long;
     private TextView textview_alt;
+    private TextView textview_speed;
     private LocationManager locationManager;
     private Handler handler;
-    private Location location;
+    private Location currentLocation;
     private double latitude;
     private double longitude;
+    private double speed;
+    private double calculatedSpeed = 0;
     private static double altitude;
 
     //variable used in the second activity
@@ -131,6 +134,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         textview_lat = (TextView) findViewById(R.id.textview_lat);
         textview_long = (TextView) findViewById(R.id.textview_long);
         textview_alt = (TextView) findViewById(R.id.textview_alt);
+        textview_speed = (TextView) findViewById(R.id.textview_speed);
 
         handler = new Handler();
 
@@ -148,11 +152,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             return;
         }
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
-        location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        if (location != null){
-            latitude = location.getLatitude();
-            longitude = location.getLongitude();
-            altitude = location.getAltitude();
+        currentLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        if (currentLocation != null){
+            latitude = currentLocation.getLatitude();
+            longitude = currentLocation.getLongitude();
+            altitude = currentLocation.getAltitude();
+            speed = currentLocation.getSpeed();
         }
 
         handler.postDelayed(runLocation, 1000);
@@ -165,11 +170,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 textview_lat.setText("Latitude = " + String.valueOf(latitude));
                 textview_long.setText("Longitude = " + String.valueOf(longitude));
                 textview_alt.setText("Altitude = " + String.valueOf(altitude));
+                textview_speed.setText("Speed (m/s) = " + String.valueOf(speed));
                 //Toast.makeText(MainActivity.this, "location check", Toast.LENGTH_SHORT).show();
                 MainActivity.this.handler.postDelayed(MainActivity.this.runLocation, 5000);
             if (isstart){
-                writer.println("          <trkpt lat= " + location.getLatitude() +" lon=" + location.getLongitude() + ">");
-                writer.println("               <ele>" + location.getAltitude() + "</ele>");
+                writer.println("          <trkpt lat= " + currentLocation.getLatitude() +" lon=" + currentLocation.getLongitude() + ">");
+                writer.println("               <ele>" + currentLocation.getAltitude() + "</ele>");
                 writer.println("           </trkpt>");
             }
         }
@@ -180,6 +186,23 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         latitude = location.getLatitude();
         longitude = location.getLongitude();
         altitude = location.getAltitude();
+        /*if (this.currentLocation != null)
+            speed = Math.sqrt(
+                    Math.pow(location.getLongitude() - currentLocation.getLongitude(), 2)
+                            + Math.pow(location.getLatitude() - currentLocation.getLatitude(), 2)
+            ) / (location.getTime() - this.currentLocation.getTime());
+        //if there is speed from location
+        if (location.hasSpeed())
+            //get location speed
+            speed = location.getSpeed();
+        this.currentLocation = location;*/
+        if (currentLocation != null) {
+            double elapsedTime = (location.getTime() - currentLocation.getTime()) / 1_000; // Convert milliseconds to seconds
+            calculatedSpeed = currentLocation.distanceTo(location) / elapsedTime;
+        }
+        this.currentLocation = location;
+
+        speed = location.hasSpeed() ? location.getSpeed() : calculatedSpeed;
     }
 
     @Override
