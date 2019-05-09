@@ -13,12 +13,15 @@ public class statActivity extends AppCompatActivity {
     Chronometer chronometer = MainActivity.getTimer();
     double averagespeed = MainActivity.getAverageSpeed();
     double totdist = MainActivity.getDist();
+    double time = MainActivity.getATime()/60 ;
+    double calories = averagespeed*time + 65;
 
     TextView maxAlt_txt;
     TextView minAlt_txt;
     TextView aveSpeed_txt;
     TextView maxDist_txt;
     TextView maxTime_txt;
+    TextView calories_txt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +36,15 @@ public class statActivity extends AppCompatActivity {
         aveSpeed_txt = (TextView) findViewById(R.id.aveSpeed);
         maxDist_txt = (TextView) findViewById(R.id.maxDist);
         maxTime_txt = (TextView) findViewById(R.id.maxTime);
+        calories_txt = (TextView) findViewById(R.id.caloriesburn) ;
 
         maxAlt_txt.setText("Maximum altitude = " + maxAltitude);
         minAlt_txt.setText("Minimum altitude = " + minAltitude);
         maxTime_txt.setText("Time taken = " + chronometer.getText().toString());
-        aveSpeed_txt.setText("Average Speed = " + averagespeed + " km");
+        aveSpeed_txt.setText("Average Speed = " + averagespeed + " km/h");
         maxDist_txt.setText("Total distance = " + totdist +" km");
+        calories_txt.setText("Calories burn = "+ calories);
+
 
         CustomView customView = new CustomView(this);
     }

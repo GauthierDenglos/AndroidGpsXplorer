@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     public static int[] speedtab = new int[10];
     public static double averagespeed;
     public static double totdistance;
-    int time = 0;
+    public static double time = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -285,6 +285,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     public static double getAverageSpeed(){
         return averagespeed;
+    }
+    public static double getATime() {
+        return time;
     }
 }
 
