@@ -11,6 +11,8 @@ public class statActivity extends AppCompatActivity {
     double minAltitude = MainActivity.getMinAtlitude();
     double maxAltitude = MainActivity.getMaxAtlitude();
     Chronometer chronometer = MainActivity.getTimer();
+    double averagespeed = MainActivity.getAverageSpeed();
+    double totdist = MainActivity.getDist();
 
     TextView maxAlt_txt;
     TextView minAlt_txt;
@@ -35,6 +37,8 @@ public class statActivity extends AppCompatActivity {
         maxAlt_txt.setText("Maximum altitude = " + maxAltitude);
         minAlt_txt.setText("Minimum altitude = " + minAltitude);
         maxTime_txt.setText("Time taken = " + chronometer.getText().toString());
+        aveSpeed_txt.setText("Average Speed = " + averagespeed + " km");
+        maxDist_txt.setText("Total distance = " + totdist +" km");
 
         CustomView customView = new CustomView(this);
     }

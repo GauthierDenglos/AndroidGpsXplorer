@@ -27,6 +27,7 @@ import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements LocationListener {
@@ -62,6 +63,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private PrintWriter writer;
     int MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE = 1;
     int MY_PERMISSIONS_READ_EXTERNAL_STORAGE = 1;
+    ArrayList<Double> speedlist ;
+    public static int[] speedtab = new int[10];
+    public static double averagespeed;
+    public static double totdistance;
+    int time = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +96,22 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 writer.println("   </trk>");
                 writer.print("</gpx>");
                 writer.close();
+
+                int addspeed = 0;
+                int nbspeed = speedlist.size();
+                for (int i = 0; i<nbspeed; i++){
+                    addspeed+= speedlist.get(i);
+                }
+                averagespeed = addspeed/nbspeed;
+
+                totdistance = averagespeed * (time/3600);
+
+                int increment = nbspeed/10;
+                for (int i = 0 ; i<10; i++){
+                    double temp = (double)speedlist.get(i*increment);
+                    speedtab[i] = (int)temp;
+                }
+
             }
         });
 
@@ -98,6 +120,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             public void onClick(View v) {
                 startChronometer(v);
                 isstart =true;
+                speedlist = new ArrayList<Double>();
                 date = new Date();
                 GPXFile = new File(path + "/GPStracks/", format.format(date) + ".gpx");
                 try {
@@ -174,6 +197,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 //Toast.makeText(MainActivity.this, "location check", Toast.LENGTH_SHORT).show();
                 MainActivity.this.handler.postDelayed(MainActivity.this.runLocation, 5000);
             if (isstart){
+                speedlist.add(speed* 3.6);
+                time+=5;
                 writer.println("          <trkpt lat= " + currentLocation.getLatitude() +" lon=" + currentLocation.getLongitude() + ">");
                 writer.println("               <ele>" + currentLocation.getAltitude() + "</ele>");
                 writer.println("           </trkpt>");
@@ -249,4 +274,17 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     public static Chronometer getTimer(){
         return chronometer;
     }
+
+    public static int[] getSpeedpoint(){
+        return speedtab;
+    }
+
+    public static double getDist(){
+        return totdistance;
+    }
+
+    public static double getAverageSpeed(){
+        return averagespeed;
+    }
 }
+

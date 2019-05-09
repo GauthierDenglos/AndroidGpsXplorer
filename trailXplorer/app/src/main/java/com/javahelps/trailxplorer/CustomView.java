@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class CustomView extends View {
 
-    private int[] speedpoint = {2,6,8,8,12,10,5,10,18,3};
+    public int[] speedpoint = MainActivity.getSpeedpoint();
     private int[] timepoint = {1,2,3,4,5,6,7,8,9,10};
 
 
