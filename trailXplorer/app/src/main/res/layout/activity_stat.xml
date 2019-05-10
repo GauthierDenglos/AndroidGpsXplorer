@@ -17,19 +17,19 @@
         android:layout_height="wrap_content"
         android:textSize="20dp"
         android:text="Graph of your speed  during the time "
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="2dp"
         android:layout_marginLeft="40dp"
         android:textColor="@android:color/black"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/aveSpeed"
-            android:text="Average speed = "
-            android:textSize="18dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="70dp"
-            android:textColor="@android:color/black"/>
+    <TextView
+        android:id="@+id/aveSpeed"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginBottom="10dp"
+        android:text="Average speed = "
+        android:textColor="@android:color/black"
+        android:textSize="18dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -37,7 +37,7 @@
             android:id="@+id/maxDist"
             android:text="Total distance = "
             android:textSize="18dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="10dp"
             android:layout_marginLeft="70dp"
             android:textColor="@android:color/black"/>
 
@@ -47,7 +47,7 @@
             android:id="@+id/maxTime"
             android:text="Time taken = "
             android:textSize="18dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="10dp"
             android:layout_marginLeft="70dp"
             android:textColor="@android:color/black"/>
 
@@ -57,7 +57,7 @@
             android:id="@+id/minAlt"
             android:text="Minimum altitude = "
             android:textSize="18dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="10dp"
             android:layout_marginLeft="70dp"
             android:textColor="@android:color/black"/>
 
@@ -67,18 +67,18 @@
             android:id="@+id/maxAlt"
             android:text="Maximum altitude = "
             android:textSize="18dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="10dp"
             android:layout_marginLeft="70dp"
             android:textColor="@android:color/black"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/caloriesburn"
-        android:text="Calories burn = "
-        android:textSize="18dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="70dp"
-        android:textColor="@android:color/black"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/caloriesburn"
+            android:text="Calories burn = "
+            android:textSize="18dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="70dp"
+            android:textColor="@android:color/black"/>
 
 </LinearLayout>
