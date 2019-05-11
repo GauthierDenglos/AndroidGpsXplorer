@@ -14,7 +14,7 @@ public class statActivity extends AppCompatActivity {
     double averagespeed = MainActivity.getAverageSpeed();
     double totdist = MainActivity.getDist();
     double time = MainActivity.getATime()/60 ;
-    double calories = averagespeed*time + 65;
+    double calories = (averagespeed*time + 65)/60;
 
     TextView maxAlt_txt;
     TextView minAlt_txt;
@@ -29,7 +29,7 @@ public class statActivity extends AppCompatActivity {
         setContentView(R.layout.activity_stat);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Stat Activity");
+        actionBar.setTitle("Your statistics");
 
         maxAlt_txt = (TextView) findViewById(R.id.maxAlt);
         minAlt_txt = (TextView) findViewById(R.id.minAlt);

@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private PrintWriter writer;
     int MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE = 1;
     int MY_PERMISSIONS_READ_EXTERNAL_STORAGE = 1;
+    int MY_PERMISSIONS_ACCESS_FINE_LOCATION = 1;
     ArrayList<Double> speedlist ;
     public static int[] speedtab = new int[10];
     public static double averagespeed;
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         setContentView(R.layout.activity_main);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Start Activity");
+        actionBar.setTitle("TrailXplorer");
 
         chronometer = findViewById(R.id.chronometer);
 
@@ -87,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE);
         ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                 MY_PERMISSIONS_READ_EXTERNAL_STORAGE);
+        //ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},MY_PERMISSIONS_ACCESS_FINE_LOCATION);
         stopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
