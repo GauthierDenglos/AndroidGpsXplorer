@@ -257,7 +257,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     @Override
     public void onLocationChanged(Location location) {
-        /* */
+        /* Get the basics data that will be display in textViews. We use basic methods of java, except for the speed that didn't work.
+        We used the classic V = D / T, d is Distance and T is time. */
         latitude = location.getLatitude();
         longitude = location.getLongitude();
         altitude = location.getAltitude();
@@ -274,8 +275,15 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         else{
             speed = calculatedSpeed;
         }
-        if (Double.isInfinite(speed) || Double.isNaN(speed)){ // If the speed is detected has infinite or Not a number
+        if (Double.isInfinite(speed) || Double.isNaN(speed)){ /* If the speed is detected has infinite or Not a number
+        (which happen sometime because of the getSpeed function or location bug) we replace it by the average speed of a man in m/s  */
             speed = 1.11113547;
+        }
+        if (maxAtlitude < altitude){
+            maxAtlitude = altitude;
+        }
+        if (altitude < minAtlitude && minAtlitude > 0) {
+            minAtlitude = altitude;
         }
     }
 
@@ -294,49 +302,46 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     }
 
+    /* All chronometer linked functions */
     public void startChronometer (View v){
         if(!running){
             chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
             chronometer.start();
             running = true;
         }
-
-    }
+    } // Make the chronometer running if the boolean is false, and turn it into true
 
     public void resetChronometer (View v){
         chronometer.setBase(SystemClock.elapsedRealtime());
         pauseOffset = 0;
-    }
+    }// Reset the chronometer by making it 0.
 
+    // All getters
     public static double getMaxAtlitude(){
-        if (maxAtlitude < altitude)
-            maxAtlitude = altitude;
         return maxAtlitude;
-    }
+    } // Return the max altitude and get it so we can use it in the other activity
 
     public static double getMinAtlitude(){
-        if (altitude < minAtlitude)
-            minAtlitude = altitude;
         return minAtlitude;
-    }
+    }// Return the min altitude and get it so we can use it in the other activity
 
     public static Chronometer getTimer(){
         return chronometer;
-    }
+    }// Return the chronometer and get it so we can use it in the other activity
 
     public static int[] getSpeedpoint(){
         return speedtab;
-    }
+    }// Return the table of the different speed and get it so we can use it in the other activity
 
     public static double getDist(){
         return totdistance;
-    }
+    }// Return the distance and get it so we can use it in the other activity
 
     public static double getAverageSpeed(){
         return averagespeed;
-    }
+    }// Return the average speed and get it so we can use it in the other activity
     public static double getATime() {
         return time;
-    }
+    }// Return the time and get it so we can use it in the other activity
 }
 

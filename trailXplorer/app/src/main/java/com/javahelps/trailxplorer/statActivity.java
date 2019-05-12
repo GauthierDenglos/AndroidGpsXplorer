@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 public class statActivity extends AppCompatActivity {
 
+    //Get all the different variable we initialize int he mainActivity and get it here
     double minAltitude = MainActivity.getMinAtlitude();
     double maxAltitude = MainActivity.getMaxAtlitude();
     Chronometer chronometer = MainActivity.getTimer();
@@ -16,6 +17,7 @@ public class statActivity extends AppCompatActivity {
     double time = MainActivity.getATime()/60 ;
     double calories = (averagespeed*time + 65)/60;
 
+    // Get all the different textView of the activity_stat xml file
     TextView maxAlt_txt;
     TextView minAlt_txt;
     TextView aveSpeed_txt;
@@ -47,7 +49,7 @@ public class statActivity extends AppCompatActivity {
 
 
         CustomView customView = new CustomView(this);
-    }
+    } // Concatenate all the values with the specified textView and also display the graph (CustomView)
 
 
 }

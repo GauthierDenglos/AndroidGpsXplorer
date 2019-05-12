@@ -67,7 +67,7 @@
         <Button
             android:id="@+id/createGpx"
             android:layout_width="100dp"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="75dp"
             android:layout_marginTop="10dp"
             android:text="Start !" />
@@ -75,7 +75,7 @@
         <Button
             android:id="@+id/launchActivity"
             android:layout_width="100dp"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="10dp"
             android:text="Stop !"/>
@@ -84,7 +84,7 @@
     <Button
         android:id="@+id/resetAll"
         android:layout_width="100dp"
-        android:layout_height="65dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="125dp"
         android:layout_marginTop="10dp"
         android:text="Reset The timer !" />
