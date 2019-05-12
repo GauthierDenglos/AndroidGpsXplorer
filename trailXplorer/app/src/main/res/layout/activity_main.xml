@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,66 +10,83 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:textSize="20sp"
-        android:text="Welcome to the GpsXplorer app ! Press start to launch the record : "
-        android:textColor="@android:color/black"/>
+        android:layout_marginLeft="10dp"
+        android:text="Press start to launch the record ! "
+        android:textColor="@android:color/black"
+        android:textSize="18sp"/>
+
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:text="Longitude = "
         android:id="@+id/textview_long"
-        android:textColor="@android:color/black"/>
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Latitude = "
-        android:textSize="20sp"
+        android:text="Longitude = "
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"/>
+
+    <TextView
         android:id="@+id/textview_lat"
-        android:textColor="@android:color/black"/>
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Altitude = "
-        android:textSize="20sp"
+        android:layout_marginLeft="10dp"
+        android:text="Latitude = "
+        android:textColor="@android:color/black"
+        android:textSize="20sp" />
+
+    <TextView
         android:id="@+id/textview_alt"
-        android:textColor="@android:color/black"/>
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Speed (m/s) = "
-        android:textSize="20sp"
+        android:layout_marginLeft="10dp"
+        android:text="Altitude = "
+        android:textColor="@android:color/black"
+        android:textSize="20sp" />
+
+    <TextView
         android:id="@+id/textview_speed"
-        android:textColor="@android:color/black"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="Speed (m/s) = "
+        android:textColor="@android:color/black"
+        android:textSize="20sp" />
 
     <Chronometer
+        android:id="@+id/chronometer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/chronometer"
-        android:textSize="30sp"
-        android:layout_marginLeft="150dp"
-        android:layout_marginTop="150dp"/>
+        android:layout_marginLeft="142dp"
+        android:layout_marginTop="150dp"
+        android:textSize="30sp" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+        <Button
+            android:id="@+id/createGpx"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="75dp"
+            android:layout_marginTop="10dp"
+            android:text="Start !" />
+
+        <Button
+            android:id="@+id/launchActivity"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="10dp"
+            android:text="Stop !"/>
+    </LinearLayout>
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Start !"
-        android:layout_marginTop="50dp"
-        android:id="@+id/createGpx"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Stop !"
-        android:id="@+id/launchActivity"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Reset Chronometer !"
-        android:id="@+id/resetAll"/>
-    <!--<Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Pause Chronometer !"
-        android:id="@+id/pauseChrono"/>-->
+        android:id="@+id/resetAll"
+        android:layout_width="100dp"
+        android:layout_height="65dp"
+        android:layout_marginLeft="125dp"
+        android:layout_marginTop="10dp"
+        android:text="Reset The timer !" />
 
 </LinearLayout>
