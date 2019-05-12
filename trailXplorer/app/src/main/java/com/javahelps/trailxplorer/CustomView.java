@@ -109,16 +109,16 @@ public class CustomView extends View {
         canvas.drawText("9",120,155,paint);
 
         // Caculate the position of the point on y axis
-        int ypos1 = 650 - (speedpoint[0]*55)/2 ;
-        int ypos2 = 650 - (speedpoint[1]*55)/2;
-        int ypos3 = 650 - (speedpoint[2]*55)/2;
-        int ypos4 = 650 - (speedpoint[3]*55)/2;
-        int ypos5 = 650 - (speedpoint[4]*55)/2;
-        int ypos6 = 650 - (speedpoint[5]*55)/2;
-        int ypos7 = 650 - (speedpoint[6]*55)/2;
-        int ypos8 = 650 - (speedpoint[7]*55)/2;
-        int ypos9 = 650 - (speedpoint[8]*55)/2;
-        int ypos10 = 650 -(speedpoint[9]*55)/2;
+        int ypos1 = 650 - (speedpoint[0]*55) ;
+        int ypos2 = 650 - (speedpoint[1]*55);
+        int ypos3 = 650 - (speedpoint[2]*55);
+        int ypos4 = 650 - (speedpoint[3]*55);
+        int ypos5 = 650 - (speedpoint[4]*55);
+        int ypos6 = 650 - (speedpoint[5]*55);
+        int ypos7 = 650 - (speedpoint[6]*55);
+        int ypos8 = 650 - (speedpoint[7]*55);
+        int ypos9 = 650 - (speedpoint[8]*55);
+        int ypos10 = 650 -(speedpoint[9]*55);
 
         int[] ypos = {ypos1,ypos2,ypos3,ypos4,ypos5,ypos6,ypos7,ypos8,ypos9,ypos10};
 

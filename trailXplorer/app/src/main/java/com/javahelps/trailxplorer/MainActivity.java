@@ -37,24 +37,27 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private long pauseOffset = 0;
     private boolean running ;
 
-    //Boolean to know if star botton have been touched
+    //Boolean to know if the start button have been touched
     private boolean isstart = false;
 
-    //Location: Altitude, longitude and Latitude
+    //TextView variable link to the xml file activity_main
     private TextView textview_lat;
     private TextView textview_long;
     private TextView textview_alt;
     private TextView textview_speed;
+
+    //Variables that allow the location to exist and to be updated
     private LocationManager locationManager;
     private Handler handler;
     private Location currentLocation;
+
+    //Location: Altitude, longitude and Latitude
     private double latitude;
     private double longitude;
     private double speed;
     private double calculatedSpeed = 0;
+    // Create "static" to be able to get them in the other activity
     private static double altitude;
-
-    //variable used in the second activity
     private static double maxAtlitude;
     private static double minAtlitude = 10000;
 
@@ -71,7 +74,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     int MY_PERMISSIONS_ACCESS_FINE_LOCATION = 1;
 
 
-    // Differents variable to colect the data
+    // Different variable to collect the data
+    // Create "static" to be able to get them in the other activity
     ArrayList<Double> speedlist ;
     public static int[] speedtab = new int[10];
     public static double averagespeed;
@@ -86,10 +90,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("TrailXplorer");
 
-        Toast.makeText(this, "Check if you gave us the GPS permission in your parameter !", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Check if you gave us the GPS permission in your parameter !",
+                Toast.LENGTH_LONG).show(); /*A message appear when opening the app to know
+        if the user has enable gps location */
 
-        chronometer = findViewById(R.id.chronometer);
+        chronometer = findViewById(R.id.chronometer); // get the chronometer in the xml file
 
+        //Creation of the 3 different button that will start the record, stop it and open the second activity, and reset the chronometer
         Button stopBtn = (Button) findViewById(R.id.launchActivity);
         Button startBtn = (Button) findViewById(R.id.createGpx);
         Button resetBtn = (Button) findViewById(R.id.resetAll);
@@ -183,6 +190,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             }
         });
 
+        // Reset the chronometer
         resetBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -190,13 +198,16 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             }
         });
 
+        /* get the different textView in the xml file to use and associate them to the different
+        values we will get */
         textview_lat = (TextView) findViewById(R.id.textview_lat);
         textview_long = (TextView) findViewById(R.id.textview_long);
         textview_alt = (TextView) findViewById(R.id.textview_alt);
         textview_speed = (TextView) findViewById(R.id.textview_speed);
 
-        handler = new Handler();
+        handler = new Handler(); //create a new handler. Allows to process runnable objects
 
+        /* Create the location manager which provides access to the system location services */
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -209,9 +220,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
             return;
-        }
+        } /* Permission granted to use the gps location, specialy the one in the manifest file*/
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
-        currentLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        currentLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER); // get the last known location and update it
+        // Check if the location is find or not, if yes then we can get and display the altitude, longitude and latitude
         if (currentLocation != null){
             latitude = currentLocation.getLatitude();
             longitude = currentLocation.getLongitude();
@@ -219,21 +231,20 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             speed = currentLocation.getSpeed();
         }
 
-        handler.postDelayed(runLocation, 1000);
+        handler.postDelayed(runLocation, 1000); // allows to create handle the runnable object that update every 5000 ms the data
     }
 
 
-    // Each 5 seconds we refresh data on TextView and and stuff in array and in GPX file
+    // Each 5 seconds we refresh data on TextView, data in arrays and in the GPX file
     public Runnable runLocation = new Runnable(){
         @Override
         public void run() {
-
-                textview_lat.setText("Latitude = " + String.valueOf(latitude));
-                textview_long.setText("Longitude = " + String.valueOf(longitude));
-                textview_alt.setText("Altitude = " + String.valueOf(altitude));
-                textview_speed.setText("Speed (m/s) = " + String.valueOf(speed));
-                //Toast.makeText(MainActivity.this, "location check", Toast.LENGTH_SHORT).show();
-                MainActivity.this.handler.postDelayed(MainActivity.this.runLocation, 5000);
+            //Modified directly the different value in the textView from the activity except for the chronometer
+            textview_lat.setText("Latitude = " + String.valueOf(latitude));
+            textview_long.setText("Longitude = " + String.valueOf(longitude));
+            textview_alt.setText("Altitude = " + String.valueOf(altitude));
+            textview_speed.setText("Speed (m/s) = " + String.valueOf(speed));
+            MainActivity.this.handler.postDelayed(MainActivity.this.runLocation, 5000);
             if (isstart){
                 speedlist.add(speed* 3.6);
                 time+=5;
@@ -246,6 +257,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     @Override
     public void onLocationChanged(Location location) {
+        /* */
         latitude = location.getLatitude();
         longitude = location.getLongitude();
         altitude = location.getAltitude();
@@ -262,8 +274,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         else{
             speed = calculatedSpeed;
         }
-        if (Double.isInfinite(speed) || Double.isNaN(speed))
+        if (Double.isInfinite(speed) || Double.isNaN(speed)){ // If the speed is detected has infinite or Not a number
             speed = 1.11113547;
+        }
     }
 
     @Override
