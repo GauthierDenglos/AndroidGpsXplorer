@@ -43,7 +43,7 @@ public class statActivity extends AppCompatActivity {
         maxTime_txt.setText("Time taken = " + chronometer.getText().toString());
         aveSpeed_txt.setText("Average Speed = " + averagespeed + " km/h");
         maxDist_txt.setText("Total distance = " + totdist +" km");
-        calories_txt.setText("Calories burn = "+ calories);
+        calories_txt.setText("Calories burn = "+ calories + " cal");
 
 
         CustomView customView = new CustomView(this);

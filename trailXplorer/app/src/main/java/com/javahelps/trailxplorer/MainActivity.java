@@ -78,6 +78,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("TrailXplorer");
 
+        Toast.makeText(this, "Check if you gave us the GPS permission in your parameter !", Toast.LENGTH_LONG).show();
+
         chronometer = findViewById(R.id.chronometer);
 
         Button stopBtn = (Button) findViewById(R.id.launchActivity);
@@ -213,23 +215,21 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         latitude = location.getLatitude();
         longitude = location.getLongitude();
         altitude = location.getAltitude();
-        /*if (this.currentLocation != null)
-            speed = Math.sqrt(
-                    Math.pow(location.getLongitude() - currentLocation.getLongitude(), 2)
-                            + Math.pow(location.getLatitude() - currentLocation.getLatitude(), 2)
-            ) / (location.getTime() - this.currentLocation.getTime());
-        //if there is speed from location
-        if (location.hasSpeed())
-            //get location speed
-            speed = location.getSpeed();
-        this.currentLocation = location;*/
         if (currentLocation != null) {
             double elapsedTime = (location.getTime() - currentLocation.getTime()) / 1_000; // Convert milliseconds to seconds
             calculatedSpeed = currentLocation.distanceTo(location) / elapsedTime;
         }
         this.currentLocation = location;
 
-        speed = location.hasSpeed() ? location.getSpeed() : calculatedSpeed;
+        //speed = location.hasSpeed() ? location.getSpeed() : calculatedSpeed;
+        if(location.hasSpeed()){
+            speed = location.getSpeed();
+        }
+        else{
+            speed = calculatedSpeed;
+        }
+        if (Double.isInfinite(speed) || Double.isNaN(speed))
+            speed = 1.11113547;
     }
 
     @Override
