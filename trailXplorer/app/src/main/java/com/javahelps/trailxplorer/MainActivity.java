@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private static Chronometer chronometer;
     private long pauseOffset = 0;
     private boolean running ;
+
+    //Boolean to know if star botton have been touched
     private boolean isstart = false;
 
     //Location: Altitude, longitude and Latitude
@@ -56,14 +58,20 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private static double maxAtlitude;
     private static double minAtlitude = 10000;
 
+    //Variable used to create and write on the Gpx File
     private File path= Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
     private File GPXFile;
     private Date date;
     private DateFormat format = new SimpleDateFormat("yyyy,MM.dd HH:mm:ss");
     private PrintWriter writer;
+
+    // Permission for the user
     int MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE = 1;
     int MY_PERMISSIONS_READ_EXTERNAL_STORAGE = 1;
     int MY_PERMISSIONS_ACCESS_FINE_LOCATION = 1;
+
+
+    // Differents variable to colect the data
     ArrayList<Double> speedlist ;
     public static int[] speedtab = new int[10];
     public static double averagespeed;
@@ -86,21 +94,32 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         Button startBtn = (Button) findViewById(R.id.createGpx);
         Button resetBtn = (Button) findViewById(R.id.resetAll);
 
+
+        //Ask the permission to the user
         ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                 MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE);
         ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                 MY_PERMISSIONS_READ_EXTERNAL_STORAGE);
         //ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},MY_PERMISSIONS_ACCESS_FINE_LOCATION);
+
+        // Stop button
         stopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // Star the second activity
                 startActivity(new Intent(MainActivity.this, statActivity.class));
+
+
                 isstart = false;
+
+                //Close the Gpx file
                 writer.println("       </trkseg>" );
                 writer.println("   </trk>");
                 writer.print("</gpx>");
                 writer.close();
 
+                // Calculate the average Speed
                 int addspeed = 0;
                 int nbspeed = speedlist.size();
                 for (int i = 0; i<nbspeed; i++){
@@ -108,8 +127,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 }
                 averagespeed = addspeed/nbspeed;
 
+                // Calculate the total distance
                 totdistance = averagespeed * (time/3600);
 
+
+                // Create the array of 10 points to draw the graphic
                 int increment = nbspeed/10;
                 for (int i = 0 ; i<10; i++){
                     double temp = (double)speedlist.get(i*increment);
@@ -119,14 +141,24 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             }
         });
 
+
+        //Start Button
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //Start chronometer and put boolean to true
                 startChronometer(v);
                 isstart =true;
+
+                // Initiate Variable to collect all the speed
                 speedlist = new ArrayList<Double>();
+
+                // Initiate data and the Gpx File name
                 date = new Date();
                 GPXFile = new File(path + "/GPStracks/", format.format(date) + ".gpx");
+
+                //Create the file
                 try {
                     if (GPXFile.getParentFile().exists() || GPXFile.getParentFile().mkdirs()) {
                         GPXFile.createNewFile();
@@ -141,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                     e.printStackTrace();
                 }
 
-
+                // Write the top of the GPX File
                 writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>");
                 writer.println("<gpx xmlns:android=\"http://schemas.android.com/apk/res/android\"" );
                 writer.println("    xmlns:app=\"http://schemas.android.com/apk/res-auto\"");
@@ -190,6 +222,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         handler.postDelayed(runLocation, 1000);
     }
 
+
+    // Each 5 seconds we refresh data on TextView and and stuff in array and in GPX file
     public Runnable runLocation = new Runnable(){
         @Override
         public void run() {
